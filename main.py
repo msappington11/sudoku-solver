@@ -54,7 +54,7 @@ class MainFrame:
         else:
             corners = helpers.findCorners(contours)
             grid = helpers.getSudokuGrid(corners, threshold)
-            SudokuDisplay(grid)
+            SudokuDisplay(self.master, grid)
             self.frame.pack_forget()
 
     def getGrid(self, img): # gets the grid from the image
@@ -65,9 +65,6 @@ class MainFrame:
         contours, h = cv2.findContours(thresh, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)  # find the contours around the white spaces from the threshold
         contours = list(filter(helpers.filterContours, contours))  # filter out the contours that are too big or small to be squares
         cv2.drawContours(img, contours, -1, (255, 0, 0), 2)
-        print(len(contours))
-        cv2.imshow('img', img)
-        cv2.waitKey()
         if (len(contours) == 81):
             return contours, thresh
         return -1, -1
